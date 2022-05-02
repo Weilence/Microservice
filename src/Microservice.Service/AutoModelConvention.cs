@@ -40,25 +40,35 @@ namespace Microservice.Service
 
             foreach (var action in controller.Actions)
             {
+                var actionExist = false;
                 foreach (var method in serviceType.GetMethods())
                 {
-                    if (action.ActionMethod.ToString() == method.ToString())
+                    if (action.ActionMethod.ToString() != method.ToString())
                     {
-                        var httpAttribute = method.GetCustomAttribute<HttpAttribute>();
-                        if (!string.IsNullOrEmpty(httpAttribute.Template))
-                        {
-                            action.Selectors[0].AttributeRouteModel =
-                                new AttributeRouteModel(new RouteAttribute(httpAttribute.Template));
-                        }
-
-                        var type = Assembly.Load("Microsoft.AspNetCore.Mvc.Core")
-                            .GetType("Microsoft.AspNetCore.Mvc.ActionConstraints.HttpMethodActionConstraint");
-                        var instance =
-                            Activator.CreateInstance(type, new object[] { new[] { httpAttribute.Method } }) as
-                                IActionConstraint;
-
-                        action.Selectors[0].ActionConstraints.Add(instance);
+                        continue;
                     }
+
+                    var httpAttribute = method.GetCustomAttribute<HttpAttribute>();
+                    if (!string.IsNullOrEmpty(httpAttribute.Template))
+                    {
+                        action.Selectors[0].AttributeRouteModel =
+                            new AttributeRouteModel(new RouteAttribute(httpAttribute.Template));
+                    }
+
+                    var type = Assembly.Load("Microsoft.AspNetCore.Mvc.Core")
+                        .GetType("Microsoft.AspNetCore.Mvc.ActionConstraints.HttpMethodActionConstraint");
+                    var instance =
+                        Activator.CreateInstance(type, new object[] { new[] { httpAttribute.Method } }) as
+                            IActionConstraint;
+
+                    action.Selectors[0].ActionConstraints.Add(instance);
+                    actionExist = true;
+                    break;
+                }
+
+                if (!actionExist)
+                {
+                    action.Selectors.Clear();
                 }
             }
         }

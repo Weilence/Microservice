@@ -17,4 +17,9 @@ public class UserService : IUserService
     public void Add(Dictionary<string, string> dic)
     {
     }
+
+    public void NoApi()
+    {
+        
+    }
 }
