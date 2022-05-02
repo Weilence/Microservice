@@ -90,7 +90,14 @@ namespace Microservice.Service.SourceGenerator
             
             #line default
             #line hidden
-            this.Write("        public string ");
+            this.Write("        public ");
+            
+            #line 34 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.ReturnType));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
             
             #line 34 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
@@ -144,9 +151,39 @@ namespace Microservice.Service.SourceGenerator
             
             #line default
             #line hidden
-            this.Write("                }\r\n            );\r\n            return _client.Get<string>(url).Result;\r\n        }\r\n");
+            this.Write("                }\r\n            );\r\n");
             
-            #line 53 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 51 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+
+            if (method.ReturnType == "void")
+            {
+
+            
+            #line default
+            #line hidden
+            this.Write("                _client.Get<string>(url).Wait();\r\n");
+            
+            #line 56 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+
+            }
+            else
+            {
+
+            
+            #line default
+            #line hidden
+            this.Write("                return _client.Get<string>(url).Result;\r\n");
+            
+            #line 62 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+
+            }
+
+            
+            #line default
+            #line hidden
+            this.Write("        }\r\n");
+            
+            #line 66 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
         }
         else if (method.HttpMethod == "POST")
@@ -155,23 +192,67 @@ namespace Microservice.Service.SourceGenerator
             
             #line default
             #line hidden
-            this.Write("        public string ");
+            this.Write("        public ");
             
-            #line 58 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 71 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.ReturnType));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 71 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
             
             #line default
             #line hidden
-            this.Write("(Dictionary<string, string> dic)\r\n        {\r\n            return _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + \"/");
+            this.Write("(Dictionary<string, string> dic)\r\n        {\r\n");
             
-            #line 60 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 73 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+
+            if (method.ReturnType == "void")
+            {
+
+            
+            #line default
+            #line hidden
+            this.Write("                _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + \"/");
+            
+            #line 77 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
             
             #line default
             #line hidden
-            this.Write("\", dic).Result;\r\n        }\r\n");
+            this.Write("\", dic).Wait();\r\n");
             
-            #line 62 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 78 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+
+            }
+            else
+            {
+
+            
+            #line default
+            #line hidden
+            this.Write("                return _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + \"/");
+            
+            #line 83 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\", dic).Result;\r\n");
+            
+            #line 84 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+
+            }
+
+            
+            #line default
+            #line hidden
+            this.Write("        }\r\n");
+            
+            #line 88 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
         }
     }

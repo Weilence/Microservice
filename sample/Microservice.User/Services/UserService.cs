@@ -14,8 +14,7 @@ public class UserService : IUserService
         return "error";
     }
 
-    public string Add(Dictionary<string, string> dic)
+    public void Add(Dictionary<string, string> dic)
     {
-        throw new NotImplementedException();
     }
 }

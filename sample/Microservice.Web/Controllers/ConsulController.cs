@@ -21,4 +21,11 @@ public class ConsulController : ControllerBase
         var result = _userService.Login(username, password);
         return Ok(result);
     }
+
+    [HttpPost]
+    public IActionResult Add()
+    {
+        _userService.Add(new Dictionary<string, string>());
+        return Ok();
+    }
 }

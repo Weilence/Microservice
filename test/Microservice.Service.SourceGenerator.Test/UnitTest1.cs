@@ -47,9 +47,9 @@ namespace Microservice.Api
             return _client.Get<string>(url).Result;
         }
 
-        public string Add(Dictionary<string, string> dic)
+        public void Add(Dictionary<string, string> dic)
         {
-            return _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + ""/Add"", dic).Result;
+            _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + ""/Add"", dic).Result;
         }
     }
 }";
@@ -68,7 +68,7 @@ namespace Microservice.Api
         string Login(string username, string password);
 
         [Http(Method = ""POST"")]
-        string Add(Dictionary<string, string> dic);
+        void Add(Dictionary<string, string> dic);
     }
 }"
         };

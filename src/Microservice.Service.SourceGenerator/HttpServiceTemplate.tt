@@ -31,7 +31,7 @@ namespace <#= Namespace #>
         if (method.HttpMethod == "GET")
         {
 #>
-        public string <#= method.Name #>(<#=
+        public <#= method.ReturnType #> <#= method.Name #>(<#=
                 string.Join(", ", method.Parameters.Select(m => m.Value + " " + m.Key)) #>)
         {
             var url = QueryHelpers.AddQueryString(
@@ -48,16 +48,42 @@ namespace <#= Namespace #>
 #>
                 }
             );
-            return _client.Get<string>(url).Result;
+<#
+            if (method.ReturnType == "void")
+            {
+#>
+                _client.Get<string>(url).Wait();
+<#
+            }
+            else
+            {
+#>
+                return _client.Get<string>(url).Result;
+<#
+            }
+#>
         }
 <#
         }
         else if (method.HttpMethod == "POST")
         {
 #>
-        public string <#= method.Name #>(Dictionary<string, string> dic)
+        public <#= method.ReturnType #> <#= method.Name #>(Dictionary<string, string> dic)
         {
-            return _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + "/<#= method.Name #>", dic).Result;
+<#
+            if (method.ReturnType == "void")
+            {
+#>
+                _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + "/<#= method.Name #>", dic).Wait();
+<#
+            }
+            else
+            {
+#>
+                return _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + "/<#= method.Name #>", dic).Result;
+<#
+            }
+#>
         }
 <#
         }

@@ -11,6 +11,6 @@ namespace Microservice.Api
         string Login(string username, string password);
 
         [Http(Method = "POST")]
-        string Add(Dictionary<string, string> dic);
+        void Add(Dictionary<string, string> dic);
     }
 }

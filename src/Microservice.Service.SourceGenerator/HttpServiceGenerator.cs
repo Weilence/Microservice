@@ -87,7 +87,7 @@ namespace Microservice.Service.SourceGenerator
                 template.Server = GetDictionaryValue(attributeValueDic, nameof(HostAttribute.Server));
                 template.Path = GetDictionaryValue(attributeValueDic, nameof(HostAttribute.Path));
                 var source = template.TransformText();
-                context.AddSource(interfaceDeclarationSyntax.Identifier.ValueText.Substring(1) + "g.cs", source);
+                context.AddSource(interfaceDeclarationSyntax.Identifier.ValueText.Substring(1) + ".g.cs", source);
             }
         }
 
