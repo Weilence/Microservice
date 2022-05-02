@@ -5,17 +5,22 @@
 // Auto-generated code
 using System.Collections.Generic;
 using Microsoft.AspNetCore.WebUtilities;
+using Microservice.Service;
 
 namespace <#= Namespace #>
 {
     public class <#= ClassName #> : IUserService
     {
-        private readonly string _url = "<#= Address #>";
         private readonly HttpServiceClient _client;
+        private readonly IResolveUrl _resolveUrl;
+        private readonly string _server = "<#= Server #>";
+        private readonly string _name = "<#= Name #>";
+        private readonly string _path = "<#= Path #>";
 
-        public <#= ClassName #>(HttpServiceClient client)
+        public <#= ClassName #>(HttpServiceClient client, IResolveUrl resolveUrl)
         {
             _client = client;
+            _resolveUrl = resolveUrl;
         }
 <#
     foreach (var method in Methods)
@@ -30,7 +35,7 @@ namespace <#= Namespace #>
                 string.Join(", ", method.Parameters.Select(m => m.Value + " " + m.Key)) #>)
         {
             var url = QueryHelpers.AddQueryString(
-                _url + "/<#= method.Name #>",
+                _resolveUrl.ResolveUrl(_server, _name, _path) + "/<#= method.Name #>",
                 new Dictionary<string, string>()
                 {
 <#
@@ -52,7 +57,7 @@ namespace <#= Namespace #>
 #>
         public string <#= method.Name #>(Dictionary<string, string> dic)
         {
-            return _client.Post<string>(_url + "/<#= method.Name #>", dic).Result;
+            return _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + "/<#= method.Name #>", dic).Result;
         }
 <#
         }

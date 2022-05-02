@@ -4,7 +4,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
 
-namespace Microservice.Api
+namespace Microservice.Service
 {
     public class AutoControllerFeatureProvider : IApplicationFeatureProvider<ControllerFeature>
     {
@@ -12,7 +12,7 @@ namespace Microservice.Api
         {
             var currentAssembly = Assembly.GetEntryAssembly();
             var candidates = currentAssembly.GetExportedTypes()
-                .Where(m => m.GetInterfaces().Any(n => n.GetCustomAttributes<ApiAttribute>().Any()));
+                .Where(m => m.GetInterfaces().Any(n => n.GetCustomAttributes<HttpAttribute>().Any()));
 
             foreach (var candidate in candidates)
             {

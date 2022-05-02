@@ -1,4 +1,4 @@
-using Microservice.Api;
+using Microservice.Service;
 using Microservice.Consul;
 
 var builder = WebApplication.CreateBuilder(args);

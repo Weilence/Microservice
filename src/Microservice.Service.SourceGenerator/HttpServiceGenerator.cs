@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microservice.Api;
+using Microservice.Service;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -83,10 +83,17 @@ namespace Microservice.Service.SourceGenerator
                 }
 
                 template.ClassName = interfaceDeclarationSyntax.Identifier.ValueText.Substring(1);
-                template.Address = attributeValueDic["Address"];
+                template.Name = GetDictionaryValue(attributeValueDic, nameof(HostAttribute.Name));
+                template.Server = GetDictionaryValue(attributeValueDic, nameof(HostAttribute.Server));
+                template.Path = GetDictionaryValue(attributeValueDic, nameof(HostAttribute.Path));
                 var source = template.TransformText();
                 context.AddSource(interfaceDeclarationSyntax.Identifier.ValueText.Substring(1) + "g.cs", source);
             }
+        }
+
+        private string GetDictionaryValue(Dictionary<string, string> dictionary, string key)
+        {
+            return dictionary.ContainsKey(key) ? dictionary[key] : string.Empty;
         }
     }
 
@@ -95,7 +102,7 @@ namespace Microservice.Service.SourceGenerator
         public HashSet<InterfaceDeclarationSyntax> InterfaceDeclarationSyntaxList { get; } =
             new HashSet<InterfaceDeclarationSyntax>();
 
-        public readonly List<string> Names = new List<string>() { ApiAttribute.AttributeName, nameof(ApiAttribute) };
+        public readonly List<string> Names = new List<string>() { HostAttribute.AttributeName, nameof(HostAttribute) };
 
         public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
         {

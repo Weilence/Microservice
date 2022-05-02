@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Microservice.Api\Microservice.Api.csproj" />
+        <ProjectReference Include="..\Microservice.Service\Microservice.Service.csproj" />
     </ItemGroup>
 
     <ItemGroup>

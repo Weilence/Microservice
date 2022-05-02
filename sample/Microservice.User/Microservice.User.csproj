@@ -12,9 +12,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Microservice.Api\Microservice.Api.csproj" />
+      <ProjectReference Include="..\..\src\Microservice.Service\Microservice.Service.csproj" />
       <ProjectReference Include="..\..\src\Microservice.Consul\Microservice.Consul.csproj" />
-      <ProjectReference Include="..\Microservice.Service\Microservice.Service.csproj" />
+      <ProjectReference Include="..\Microservice.Api\Microservice.Api.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,8 +1,10 @@
-﻿using Microservice.Api;
+﻿using System.Collections.Generic;
+using Microservice.Service;
 
-namespace Microservice.Service
+namespace Microservice.Api
 {
-    [Api(Address = "http://localhost:5018/User")]
+    [Host(Name = "User", Path = "/User")]
+    [Http]
     public interface IUserService
     {
         [Http(Method = "GET")]

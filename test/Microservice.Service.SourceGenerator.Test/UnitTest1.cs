@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microservice.Api;
-using Microservice.Service.SourceGenerator;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -18,23 +16,28 @@ public class UnitTest1
         var expected = @"// Auto-generated code
 using System.Collections.Generic;
 using Microsoft.AspNetCore.WebUtilities;
+using Microservice.Service;
 
 namespace Microservice.Api
 {
     public class UserService : IUserService
     {
-        private readonly string _url = ""http://localhost:5018/User"";
         private readonly HttpServiceClient _client;
+        private readonly IResolveUrl _resolveUrl;
+        private readonly string _server = ""localhost:5018"";
+        private readonly string _name = ""User"";
+        private readonly string _path = ""/User"";
 
-        public UserService(HttpServiceClient client)
+        public UserService(HttpServiceClient client, IResolveUrl resolveUrl)
         {
             _client = client;
+            _resolveUrl = resolveUrl;
         }
 
         public string Login(string username, string password)
         {
             var url = QueryHelpers.AddQueryString(
-                _url + ""/Login"",
+                _resolveUrl.ResolveUrl(_server, _name, _path) + ""/Login"",
                 new Dictionary<string, string>()
                 {
                     { nameof(username), username },
@@ -46,17 +49,19 @@ namespace Microservice.Api
 
         public string Add(Dictionary<string, string> dic)
         {
-            return _client.Post<string>(_url + ""/Add"", dic).Result;
+            return _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + ""/Add"", dic).Result;
         }
     }
 }";
         var source = new[]
         {
             @"using System.Collections.Generic;
+using Microservice.Service;
 
 namespace Microservice.Api
 {
-    [Api(Address = ""http://localhost:5018/User"")]
+    [Host(Server = ""localhost:5018"", Name = ""User"", Path = ""/User"")]
+    [Http]
     public interface IUserService
     {
         [Http(Method = ""GET"")]
@@ -102,7 +107,7 @@ namespace Microservice.Api
     private static Compilation CreateCompilation(IEnumerable<string> sources)
     {
         var options = new CSharpCompilationOptions(OutputKind.ConsoleApplication);
-        var reference = MetadataReference.CreateFromFile(typeof(ApiAttribute).Assembly.Location);
+        var reference = MetadataReference.CreateFromFile(typeof(HostAttribute).Assembly.Location);
         var syntaxTrees = sources.Select(m => CSharpSyntaxTree.ParseText(m));
         var compilation = CSharpCompilation.Create("compilation", syntaxTrees, new[] { reference },
             options

@@ -1,5 +1,5 @@
 using Consul;
-using Microservice.Service;
+using Microservice.Api;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Microservice.Web.Controllers;
@@ -8,19 +8,17 @@ namespace Microservice.Web.Controllers;
 [Route("[controller]/[action]")]
 public class ConsulController : ControllerBase
 {
-    private readonly IConsulClient _consulClient;
     private readonly IUserService _userService;
 
-    public ConsulController(IConsulClient consulClient, IUserService userService)
+    public ConsulController(IUserService userService)
     {
-        _consulClient = consulClient;
         _userService = userService;
     }
 
     [HttpGet]
-    public IActionResult Login()
+    public IActionResult Login(string username, string password)
     {
-        var result = _userService.Login("admin", "123456");
+        var result = _userService.Login(username, password);
         return Ok(result);
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace Microservice.Api
+namespace Microservice.Service
 {
     public class AutoModelConvention : IControllerModelConvention
     {
@@ -13,7 +13,7 @@ namespace Microservice.Api
         {
             var serviceType = controller.ControllerType
                 .GetInterfaces()
-                .FirstOrDefault(m => CustomAttributeExtensions.GetCustomAttributes<ApiAttribute>((MemberInfo)m).Any());
+                .FirstOrDefault(m => CustomAttributeExtensions.GetCustomAttributes<HostAttribute>(m).Any());
 
             if (serviceType == null)
             {
@@ -28,10 +28,14 @@ namespace Microservice.Api
 
             foreach (var selector in controller.Selectors)
             {
-                var apiAttribute = serviceType.GetCustomAttribute<ApiAttribute>();
+                var httpAttribute = serviceType.GetCustomAttribute<HttpAttribute>();
+                if (string.IsNullOrEmpty(httpAttribute.Template))
+                {
+                    httpAttribute.Template = "[controller]/[action]";
+                }
 
                 selector.AttributeRouteModel = new AttributeRouteModel(
-                    new RouteAttribute(apiAttribute.Path));
+                    new RouteAttribute(httpAttribute.Template));
             }
 
             foreach (var action in controller.Actions)
@@ -41,10 +45,10 @@ namespace Microservice.Api
                     if (action.ActionMethod.ToString() == method.ToString())
                     {
                         var httpAttribute = method.GetCustomAttribute<HttpAttribute>();
-                        if (!string.IsNullOrEmpty(httpAttribute.Path))
+                        if (!string.IsNullOrEmpty(httpAttribute.Template))
                         {
                             action.Selectors[0].AttributeRouteModel =
-                                new AttributeRouteModel(new RouteAttribute(httpAttribute.Path));
+                                new AttributeRouteModel(new RouteAttribute(httpAttribute.Template));
                         }
 
                         var type = Assembly.Load("Microsoft.AspNetCore.Mvc.Core")

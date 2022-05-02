@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Microservice.Api
+namespace Microservice.Service
 {
     public class JsonResultFilter : IAsyncResultFilter
     {
