@@ -13,7 +13,7 @@ namespace Microservice.Service
         {
             var serviceType = controller.ControllerType
                 .GetInterfaces()
-                .FirstOrDefault(m => CustomAttributeExtensions.GetCustomAttributes<HostAttribute>(m).Any());
+                .FirstOrDefault(m => CustomAttributeExtensions.GetCustomAttributes<HttpAttribute>(m).Any());
 
             if (serviceType == null)
             {
