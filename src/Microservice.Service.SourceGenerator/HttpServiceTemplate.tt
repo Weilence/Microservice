@@ -1,0 +1,62 @@
+﻿<#@ template language="C#" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+// Auto-generated code
+using System.Collections.Generic;
+using Microsoft.AspNetCore.WebUtilities;
+
+namespace <#= Namespace #>
+{
+    public class <#= ClassName #> : IUserService
+    {
+        private readonly string _url = "<#= Address #>";
+        private readonly HttpServiceClient _client;
+
+        public <#= ClassName #>(HttpServiceClient client)
+        {
+            _client = client;
+        }
+<#
+    foreach (var method in Methods)
+    {
+#>
+
+<#
+        if (method.HttpMethod == "GET")
+        {
+#>
+        public string <#= method.Name #>(<#=
+                string.Join(", ", method.Parameters.Select(m => m.Value + " " + m.Key)) #>)
+        {
+            var url = QueryHelpers.AddQueryString(
+                _url + "/<#= method.Name #>",
+                new Dictionary<string, string>()
+                {
+<#
+            foreach (var key in method.Parameters.Keys)
+            {
+#>
+                    { nameof(<#= key #>), <#= key #> },
+<#
+            }
+#>
+                }
+            );
+            return _client.Get<string>(url).Result;
+        }
+<#
+        }
+        else if (method.HttpMethod == "POST")
+        {
+#>
+        public string <#= method.Name #>(Dictionary<string, string> dic)
+        {
+            return _client.Post<string>(_url + "/<#= method.Name #>", dic).Result;
+        }
+<#
+        }
+    }
+#>
+    }
+}
