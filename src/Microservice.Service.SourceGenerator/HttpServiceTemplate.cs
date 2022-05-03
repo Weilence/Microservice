@@ -42,7 +42,14 @@ namespace Microservice.Service.SourceGenerator
             
             #line default
             #line hidden
-            this.Write(" : IUserService\r\n    {\r\n        private readonly HttpServiceClient _client;\r\n        private readonly IResolveUrl _resolveUrl;\r\n        private readonly string _server = \"");
+            this.Write(" : I");
+            
+            #line 12 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n    {\r\n        private readonly HttpServiceClient _client;\r\n        private readonly IResolveUrl _resolveUrl;\r\n        private readonly string _server = \"");
             
             #line 16 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Server));
@@ -239,7 +246,7 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write(").Wait();\r\n");
             
-            #line 79 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 80 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
             }
             else
@@ -250,21 +257,21 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write("            return _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + \"/");
             
-            #line 84 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 85 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
             
             #line default
             #line hidden
             this.Write("\", ");
             
-            #line 84 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 85 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.Parameters.Keys.FirstOrDefault()));
             
             #line default
             #line hidden
             this.Write(").Result;\r\n");
             
-            #line 85 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 87 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
             }
 
@@ -273,7 +280,7 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write("        }\r\n");
             
-            #line 89 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 91 "D:\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
         }
     }

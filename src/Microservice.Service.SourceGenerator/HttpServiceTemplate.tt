@@ -9,7 +9,7 @@ using Microservice.Service;
 
 namespace <#= Namespace #>
 {
-    public class <#= ClassName #> : IUserService
+    public class <#= ClassName #> : I<#= ClassName #>
     {
         private readonly HttpServiceClient _client;
         private readonly IResolveUrl _resolveUrl;
@@ -75,13 +75,15 @@ namespace <#= Namespace #>
             if (method.ReturnType == "void")
             {
 #>
-            _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + "/<#= method.Name #>", <#= method.Parameters.Keys.FirstOrDefault() #>).Wait();
+            _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + "/<#= method.Name #>", <#=
+                        method.Parameters.Keys.FirstOrDefault() #>).Wait();
 <#
             }
             else
             {
 #>
-            return _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + "/<#= method.Name #>", <#= method.Parameters.Keys.FirstOrDefault() #>).Result;
+            return _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + "/<#= method.Name #>", <#=
+                        method.Parameters.Keys.FirstOrDefault() #>).Result;
 <#
             }
 #>
