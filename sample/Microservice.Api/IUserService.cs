@@ -1,5 +1,5 @@
 ﻿using System;
-using Microservice.Service;
+using Microservice.Core;
 
 namespace Microservice.Api
 {

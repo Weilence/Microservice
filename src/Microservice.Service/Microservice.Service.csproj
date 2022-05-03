@@ -10,4 +10,9 @@
       <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Microservice.Core\Microservice.Core.csproj" />
+      <ProjectReference Include="..\Microservice.Service.SourceGenerator\Microservice.Service.SourceGenerator.csproj" />
+    </ItemGroup>
+
 </Project>

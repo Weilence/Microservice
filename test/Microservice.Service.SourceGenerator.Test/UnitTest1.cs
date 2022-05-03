@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
+using Microservice.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
-using Microsoft.CSharp.RuntimeBinder;
 using Xunit;
-using Binder = Microsoft.CSharp.RuntimeBinder.Binder;
 
 namespace Microservice.Service.SourceGenerator.Test;
 
@@ -113,7 +111,7 @@ namespace compilation.Controllers
         public ActionResult<string> Login(string username, string password)
         {
             var obj = _service.Login(username, password);
-            return Ok(obj);
+            return new JsonResult(obj);
         }
 
         [HttpPost]
@@ -148,11 +146,12 @@ public class UserService : IUserService
 }",
             @"using System;
 using Microservice.Service;
+using Microservice.Core;
 
 namespace compilation.Api
 {
     [Host(Name = ""User"", Path = ""/User"")]
-    [Http(Template = ""api/[controller]/[action]"")]
+    [Http(Route = ""api/[controller]/[action]"")]
     public interface IUserService
     {
         [Http(Method = ""GET"")]

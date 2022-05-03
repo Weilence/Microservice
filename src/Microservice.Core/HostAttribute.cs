@@ -1,6 +1,6 @@
 using System;
 
-namespace Microservice.Service
+namespace Microservice.Core
 {
     [AttributeUsage(AttributeTargets.Interface)]
     public class HostAttribute : Attribute

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Microservice.Service
+namespace Microservice.Core
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Interface)]
     public class HttpAttribute: Attribute
