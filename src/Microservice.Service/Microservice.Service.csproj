@@ -12,7 +12,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Microservice.Core\Microservice.Core.csproj" />
-      <ProjectReference Include="..\Microservice.Service.SourceGenerator\Microservice.Service.SourceGenerator.csproj" />
     </ItemGroup>
 
 </Project>
