@@ -19,10 +19,7 @@ namespace Microservice.Service.SourceGenerator
             var receiver = (HttpServiceSyntaxReceiver)context.SyntaxReceiver;
             var syntaxList = receiver.InterfaceDeclarationSyntaxList;
 
-            var addMicroserviceTemplate = new AddMicroserviceTemplate()
-            {
-                ClassInfos = new List<ClassInfo>()
-            };
+            var classInfos = new List<ClassInfo>();
             foreach (var interfaceDeclarationSyntax in syntaxList)
             {
                 var baseNamespaceDeclarationSyntax =
@@ -94,15 +91,22 @@ namespace Microservice.Service.SourceGenerator
                 var source = serviceTemplate.TransformText();
                 context.AddSource(interfaceDeclarationSyntax.Identifier.ValueText.Substring(1) + ".g.cs", source);
 
-                addMicroserviceTemplate.ClassInfos.Add(new ClassInfo()
+                classInfos.Add(new ClassInfo()
                 {
                     Interface = serviceTemplate.Namespace + ".I" + serviceTemplate.ClassName,
                     Class = serviceTemplate.Namespace + "." + serviceTemplate.ClassName,
                 });
             }
 
-            var transformText = addMicroserviceTemplate.TransformText();
-            context.AddSource("MicroserviceAspNetCoreExtensions.g.cs", transformText);
+            if (classInfos.Count > 0)
+            {
+                var addMicroserviceTemplate = new AddMicroserviceTemplate()
+                {
+                    ClassInfos = classInfos
+                };
+                var transformText = addMicroserviceTemplate.TransformText();
+                context.AddSource("MicroserviceAspNetCoreExtensions.g.cs", transformText);
+            }
         }
 
         private string GetDictionaryValue(Dictionary<string, string> dictionary, string key)
