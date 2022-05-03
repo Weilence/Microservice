@@ -14,6 +14,10 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <None Update="HttpControllerTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>HttpControllerTemplate.cs</LastGenOutput>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -29,6 +33,11 @@
             <AutoGen>True</AutoGen>
             <DesignTime>True</DesignTime>
             <DependentUpon>HttpServiceTemplate.tt</DependentUpon>
+        </Compile>
+        <Compile Update="HttpControllerTemplate.cs">
+          <AutoGen>True</AutoGen>
+          <DesignTime>True</DesignTime>
+          <DependentUpon>HttpControllerTemplate.tt</DependentUpon>
         </Compile>
     </ItemGroup>
 

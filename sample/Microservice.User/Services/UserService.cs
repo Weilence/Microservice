@@ -14,12 +14,7 @@ public class UserService : IUserService
         return "error";
     }
 
-    public void Add(Dictionary<string, string> dic)
+    public void Add(TestJson json)
     {
-    }
-
-    public void NoApi()
-    {
-        
     }
 }

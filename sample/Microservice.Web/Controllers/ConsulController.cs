@@ -6,7 +6,7 @@ namespace Microservice.Web.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class ConsulController : ControllerBase
+public class ConsulController: ControllerBase
 {
     private readonly IUserService _userService;
 
@@ -19,13 +19,13 @@ public class ConsulController : ControllerBase
     public IActionResult Login(string username, string password)
     {
         var result = _userService.Login(username, password);
-        return Ok(result);
+        return new JsonResult(result);
     }
 
     [HttpPost]
     public IActionResult Add()
     {
-        _userService.Add(new Dictionary<string, string>());
+        _userService.Add(new TestJson());
         return Ok();
     }
 }

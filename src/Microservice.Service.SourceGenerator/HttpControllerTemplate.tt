@@ -1,0 +1,91 @@
+﻿<#@ template language="C#" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    string GetMethodAttribute(Method method)
+    {
+        if (method.HttpMethod == "GET")
+        {
+            return "[HttpGet]";
+        }
+        else if (method.HttpMethod == "POST")
+        {
+            return "[HttpPost]";
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    string GetReturnType(Method method)
+    {
+        if (method.ReturnType == "void")
+        {
+            return "IActionResult";
+        }
+        else
+        {
+            return "ActionResult<" + method.ReturnType + ">";
+        }
+    }
+
+    string GetMethodParameter(Method method)
+    {
+        return string.Join(", ", method.Parameters.Select(m => m.Value + " " + m.Key));
+    }
+
+    string GetMethodSignature(Method method)
+    {
+        return "public " + GetReturnType(method) + " " + method.Name + "(" + GetMethodParameter(method) + ")";
+    }
+#>
+// Auto-generated code
+using <#= Assembly #>;
+using Microsoft.AspNetCore.Mvc;
+
+namespace <#= Namespace #>
+{
+    [ApiController]
+    [Route("<#= Route #>")]
+    public class <#= Name #>Controller : ControllerBase
+    {
+        private readonly I<#= Name #>Service _service;
+
+        public <#= Name #>Controller(I<#= Name #>Service service)
+        {
+            _service = service;
+        }
+<#
+    foreach (var method in Methods)
+    {
+#>
+
+        <#= GetMethodAttribute(method) #>
+        <#= GetMethodSignature(method) #>
+        {
+<#
+        if (method.ReturnType != "void")
+        {
+#>
+            var obj = _service.<#= method.Name #>(<#=
+                string.Join(", ", method.Parameters.Select(m => m.Key)) #>);
+            return new JsonResult(obj);
+<#
+        }
+        else
+        {
+#>
+            _service.<#= method.Name #>(<#=
+                string.Join(", ", method.Parameters.Select(m => m.Key)) #>);
+            return Ok();
+<#
+        }
+#>
+        }
+<#
+    }
+#>
+    }
+}

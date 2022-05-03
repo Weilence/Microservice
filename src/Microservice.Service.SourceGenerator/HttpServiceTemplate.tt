@@ -52,13 +52,13 @@ namespace <#= Namespace #>
             if (method.ReturnType == "void")
             {
 #>
-                _client.Get<string>(url).Wait();
+            _client.Get<string>(url).Wait();
 <#
             }
             else
             {
 #>
-                return _client.Get<string>(url).Result;
+            return _client.Get<string>(url).Result;
 <#
             }
 #>
@@ -68,19 +68,20 @@ namespace <#= Namespace #>
         else if (method.HttpMethod == "POST")
         {
 #>
-        public <#= method.ReturnType #> <#= method.Name #>(Dictionary<string, string> dic)
+        public <#= method.ReturnType #> <#= method.Name #>(<#=
+                string.Join(", ", method.Parameters.Select(m => m.Value + " " + m.Key)) #>)
         {
 <#
             if (method.ReturnType == "void")
             {
 #>
-                _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + "/<#= method.Name #>", dic).Wait();
+            _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + "/<#= method.Name #>", <#= method.Parameters.Keys.FirstOrDefault() #>).Wait();
 <#
             }
             else
             {
 #>
-                return _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + "/<#= method.Name #>", dic).Result;
+            return _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + "/<#= method.Name #>", <#= method.Parameters.Keys.FirstOrDefault() #>).Result;
 <#
             }
 #>

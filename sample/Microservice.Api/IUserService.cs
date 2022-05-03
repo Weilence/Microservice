@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Microservice.Service;
 
 namespace Microservice.Api
@@ -11,6 +11,12 @@ namespace Microservice.Api
         string Login(string username, string password);
 
         [Http(Method = "POST")]
-        void Add(Dictionary<string, string> dic);
+        void Add(TestJson json);
+    }
+
+    public class TestJson
+    {
+        public string Name { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }
