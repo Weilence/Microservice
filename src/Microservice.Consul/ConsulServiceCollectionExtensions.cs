@@ -1,9 +1,9 @@
 ﻿using Consul;
+using Microservice.Consul;
 using Microservice.Service;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Microservice.Consul
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ConsulServiceCollectionExtensions
     {

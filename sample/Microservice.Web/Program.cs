@@ -1,5 +1,3 @@
-using Microservice.Api;
-using Microservice.Service;
 using Microservice.Consul;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +8,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHttpClient();
-builder.Services.AddSingleton<HttpServiceClient>();
-builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddMicroservice();
 
 builder.Services.AddConsul(builder.Configuration.GetSection("Consul"));
 

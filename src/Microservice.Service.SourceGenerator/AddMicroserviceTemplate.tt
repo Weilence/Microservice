@@ -1,0 +1,27 @@
+<#@ template language="C#" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using Microservice.Service;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
+namespace Microsoft.Extensions.DependencyInjection
+{
+    public static class MicroserviceExtensions
+    {
+        public static IServiceCollection AddMicroservice(this IServiceCollection services)
+        {
+            services.AddHttpClient();
+            services.AddSingleton<HttpServiceClient>();
+            services.TryAddSingleton<IResolveUrl, DefaultResolveUrl>();
+<#
+    foreach (var classInfo in ClassInfos)
+    {
+#>
+            services.AddSingleton<<#= classInfo.Interface #>, <#= classInfo.Class #>>();
+<#
+    }
+#>
+            return services;
+        }
+    }
+}

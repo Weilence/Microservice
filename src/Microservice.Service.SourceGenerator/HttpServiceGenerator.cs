@@ -19,12 +19,17 @@ namespace Microservice.Service.SourceGenerator
             var receiver = (HttpServiceSyntaxReceiver)context.SyntaxReceiver;
             var syntaxList = receiver.InterfaceDeclarationSyntaxList;
 
-            var template = new HttpServiceTemplate();
+            var addMicroserviceTemplate = new AddMicroserviceTemplate()
+            {
+                ClassInfos = new List<ClassInfo>()
+            };
             foreach (var interfaceDeclarationSyntax in syntaxList)
             {
                 var baseNamespaceDeclarationSyntax =
                     interfaceDeclarationSyntax.FirstAncestorOrSelf<BaseNamespaceDeclarationSyntax>();
-                template.Namespace = baseNamespaceDeclarationSyntax.Name.ToString();
+
+                var serviceTemplate = new HttpServiceTemplate();
+                serviceTemplate.Namespace = baseNamespaceDeclarationSyntax.Name.ToString();
 
                 var attributeValueDic = new Dictionary<string, string>();
 
@@ -44,7 +49,7 @@ namespace Microservice.Service.SourceGenerator
                     }
                 }
 
-                template.Methods = new List<Method>();
+                serviceTemplate.Methods = new List<Method>();
                 foreach (var methodDeclarationSyntax in interfaceDeclarationSyntax.Members
                              .OfType<MethodDeclarationSyntax>())
                 {
@@ -79,16 +84,25 @@ namespace Microservice.Service.SourceGenerator
                         }
                     }
 
-                    template.Methods.Add(method);
+                    serviceTemplate.Methods.Add(method);
                 }
 
-                template.ClassName = interfaceDeclarationSyntax.Identifier.ValueText.Substring(1);
-                template.Name = GetDictionaryValue(attributeValueDic, nameof(HostAttribute.Name));
-                template.Server = GetDictionaryValue(attributeValueDic, nameof(HostAttribute.Server));
-                template.Path = GetDictionaryValue(attributeValueDic, nameof(HostAttribute.Path));
-                var source = template.TransformText();
+                serviceTemplate.ClassName = interfaceDeclarationSyntax.Identifier.ValueText.Substring(1);
+                serviceTemplate.Name = GetDictionaryValue(attributeValueDic, nameof(HostAttribute.Name));
+                serviceTemplate.Server = GetDictionaryValue(attributeValueDic, nameof(HostAttribute.Server));
+                serviceTemplate.Path = GetDictionaryValue(attributeValueDic, nameof(HostAttribute.Path));
+                var source = serviceTemplate.TransformText();
                 context.AddSource(interfaceDeclarationSyntax.Identifier.ValueText.Substring(1) + ".g.cs", source);
+
+                addMicroserviceTemplate.ClassInfos.Add(new ClassInfo()
+                {
+                    Interface = serviceTemplate.Namespace + ".I" + serviceTemplate.ClassName,
+                    Class = serviceTemplate.Namespace + "." + serviceTemplate.ClassName,
+                });
             }
+
+            var transformText = addMicroserviceTemplate.TransformText();
+            context.AddSource("MicroserviceAspNetCoreExtensions.g.cs", transformText);
         }
 
         private string GetDictionaryValue(Dictionary<string, string> dictionary, string key)

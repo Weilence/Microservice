@@ -18,6 +18,10 @@
           <Generator>TextTemplatingFilePreprocessor</Generator>
           <LastGenOutput>HttpControllerTemplate.cs</LastGenOutput>
         </None>
+        <None Update="AddMicroserviceTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>AddMicroserviceTemplate.cs</LastGenOutput>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -38,6 +42,11 @@
           <AutoGen>True</AutoGen>
           <DesignTime>True</DesignTime>
           <DependentUpon>HttpControllerTemplate.tt</DependentUpon>
+        </Compile>
+        <Compile Update="AddMicroserviceTemplate.cs">
+          <AutoGen>True</AutoGen>
+          <DesignTime>True</DesignTime>
+          <DependentUpon>AddMicroserviceTemplate.tt</DependentUpon>
         </Compile>
     </ItemGroup>
 
