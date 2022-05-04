@@ -15,7 +15,15 @@ namespace Microservice.Service
 
         public async Task<T> Get<T>(string url)
         {
-            return await _httpClient.GetFromJsonAsync<T>(url);
+            var res = await _httpClient.GetAsync(url);
+            if (res.Content.Headers.ContentType?.MediaType == "application/json")
+            {
+                return await res.Content.ReadFromJsonAsync<T>();
+            }
+            else
+            {
+                return default;
+            }
         }
 
         public async Task<T> Post<T>(string url, object obj)
