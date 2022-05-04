@@ -51,6 +51,19 @@ namespace Microservice.Api
             return _client.Get<string>(url).Result;
         }
 
+        public void Test(int p1, int p2)
+        {
+            var url = QueryHelpers.AddQueryString(
+                _resolveUrl.ResolveUrl(_server, _name, _path) + ""/Test"",
+                new Dictionary<string, string>()
+                {
+                    { nameof(p1), p1?.ToString() },
+                    { nameof(p2), p2?.ToString() },
+                }
+            );
+            _client.Get<string>(url).Wait();
+        }
+
         public void Add(TestJson json)
         {
             _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + ""/Add"", json).Wait();
@@ -60,7 +73,7 @@ namespace Microservice.Api
         var source = new[]
         {
             @"using System;
-using Microservice.Service;
+using Microservice.Core;
 
 namespace Microservice.Api
 {
@@ -70,6 +83,9 @@ namespace Microservice.Api
     {
         [Http(Method = ""GET"")]
         string Login(string username, string password);
+
+        [Http(Method = ""GET"")]
+        void Test(int p1, int p2);
 
         [Http(Method = ""POST"")]
         void Add(TestJson json);
