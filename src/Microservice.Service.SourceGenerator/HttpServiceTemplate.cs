@@ -28,58 +28,58 @@ namespace Microservice.Service.SourceGenerator
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("// Auto-generated code\r\nusing System.Collections.Generic;\r\nusing Microsoft.AspNetCore.WebUtilities;\r\nusing Microservice.Service;\r\n\r\nnamespace ");
+            this.Write("// Auto-generated code\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing Microsoft.AspNetCore.WebUtilities;\r\nusing Microservice.Service;\r\n\r\nnamespace ");
             
-            #line 10 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 11 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Namespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    public class ");
             
-            #line 12 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 13 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
             #line hidden
             this.Write(" : I");
             
-            #line 12 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 13 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n        private readonly HttpServiceClient _client;\r\n        private readonly IResolveUrl _resolveUrl;\r\n        private readonly string _server = \"");
             
-            #line 16 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 17 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Server));
             
             #line default
             #line hidden
             this.Write("\";\r\n        private readonly string _name = \"");
             
-            #line 17 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 18 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write("\";\r\n        private readonly string _path = \"");
             
-            #line 18 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 19 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Path));
             
             #line default
             #line hidden
             this.Write("\";\r\n\r\n        public ");
             
-            #line 20 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 21 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
             #line hidden
             this.Write("(HttpServiceClient client, IResolveUrl resolveUrl)\r\n        {\r\n            _client = client;\r\n            _resolveUrl = resolveUrl;\r\n        }\r\n");
             
-            #line 25 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 26 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
     foreach (var method in Methods)
     {
@@ -89,7 +89,7 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write("\r\n");
             
-            #line 30 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 31 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
         if (method.HttpMethod == "GET")
         {
@@ -99,35 +99,35 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write("        public ");
             
-            #line 34 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 35 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.ReturnType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 34 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 35 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 34 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 35 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", method.Parameters.Select(m => m.Value + " " + m.Key))));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            var url = QueryHelpers.AddQueryString(\r\n                _resolveUrl.ResolveUrl(_server, _name, _path) + \"/");
             
-            #line 38 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 39 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
             
             #line default
             #line hidden
             this.Write("\",\r\n                new Dictionary<string, string>()\r\n                {\r\n");
             
-            #line 41 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 42 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
             foreach (var pair in method.Parameters)
             {
@@ -137,21 +137,21 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write("                    { nameof(");
             
-            #line 45 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 46 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pair.Key));
             
             #line default
             #line hidden
             this.Write("), ");
             
-            #line 45 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(pair.Value == "string" ? pair.Key : pair.Key + "?.ToString()"));
+            #line 46 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(pair.Value == "string" ? pair.Key : $"Convert.ToString({pair.Key})"));
             
             #line default
             #line hidden
             this.Write(" },\r\n");
             
-            #line 47 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 48 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
             }
 
@@ -160,7 +160,7 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write("                }\r\n            );\r\n");
             
-            #line 52 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 53 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
             if (method.ReturnType == "void")
             {
@@ -170,7 +170,7 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write("            _client.Get<string>(url).Wait();\r\n");
             
-            #line 57 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 58 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
             }
             else
@@ -181,7 +181,7 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write("            return _client.Get<string>(url).Result;\r\n");
             
-            #line 63 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 64 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
             }
 
@@ -190,7 +190,7 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write("        }\r\n");
             
-            #line 67 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 68 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
         }
         else if (method.HttpMethod == "POST")
@@ -201,28 +201,28 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write("        public ");
             
-            #line 72 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 73 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.ReturnType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 72 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 73 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 72 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 73 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", method.Parameters.Select(m => m.Value + " " + m.Key))));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n");
             
-            #line 75 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 76 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
             if (method.ReturnType == "void")
             {
@@ -232,21 +232,21 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write("            _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + \"/");
             
-            #line 79 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 80 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
             
             #line default
             #line hidden
             this.Write("\", ");
             
-            #line 79 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 80 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.Parameters.Keys.FirstOrDefault()));
             
             #line default
             #line hidden
             this.Write(").Wait();\r\n");
             
-            #line 81 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 82 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
             }
             else
@@ -257,21 +257,21 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write("            return _client.Post<string>(_resolveUrl.ResolveUrl(_server, _name, _path) + \"/");
             
-            #line 86 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 87 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
             
             #line default
             #line hidden
             this.Write("\", ");
             
-            #line 86 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 87 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(method.Parameters.Keys.FirstOrDefault()));
             
             #line default
             #line hidden
             this.Write(").Result;\r\n");
             
-            #line 88 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 89 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
             }
 
@@ -280,7 +280,7 @@ namespace Microservice.Service.SourceGenerator
             #line hidden
             this.Write("        }\r\n");
             
-            #line 92 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
+            #line 93 "C:\Users\weile\source\repos\Microservice\src\Microservice.Service.SourceGenerator\HttpServiceTemplate.tt"
 
         }
     }

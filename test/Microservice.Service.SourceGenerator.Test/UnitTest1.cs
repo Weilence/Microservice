@@ -18,6 +18,7 @@ public class UnitTest1
     public void TestHttpService()
     {
         var expected = @"// Auto-generated code
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.WebUtilities;
 using Microservice.Service;
@@ -57,8 +58,8 @@ namespace Microservice.Api
                 _resolveUrl.ResolveUrl(_server, _name, _path) + ""/Test"",
                 new Dictionary<string, string>()
                 {
-                    { nameof(p1), p1?.ToString() },
-                    { nameof(p2), p2?.ToString() },
+                    { nameof(p1), Convert.ToString(p1) },
+                    { nameof(p2), Convert.ToString(p2) },
                 }
             );
             _client.Get<string>(url).Wait();

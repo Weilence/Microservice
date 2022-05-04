@@ -3,6 +3,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
 // Auto-generated code
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.WebUtilities;
 using Microservice.Service;
@@ -43,7 +44,7 @@ namespace <#= Namespace #>
             {
 #>
                     { nameof(<#= pair.Key #>), <#=
-                        pair.Value == "string" ? pair.Key : pair.Key + "?.ToString()" #> },
+                        pair.Value == "string" ? pair.Key : $"Convert.ToString({pair.Key})" #> },
 <#
             }
 #>
