@@ -1,4 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Consul;
 using Microsoft.Extensions.Hosting;
@@ -11,12 +14,15 @@ namespace Microservice.Consul
     {
         private readonly IConsulClient _client;
         private readonly ILogger<ConsulAgent> _logger;
+        private readonly IHostingEnvironment _hostingEnvironment;
         private readonly ConsulConfig _config;
 
-        public ConsulAgent(IConsulClient client, IOptions<ConsulConfig> config, ILogger<ConsulAgent> logger)
+        public ConsulAgent(IConsulClient client, IOptions<ConsulConfig> config, ILogger<ConsulAgent> logger,
+            IHostingEnvironment hostingEnvironment)
         {
             _client = client;
             _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
             _config = config.Value;
             if (string.IsNullOrEmpty(_config.ID))
             {
@@ -28,13 +34,19 @@ namespace Microservice.Consul
         {
             var id = _config.ID;
 
+            var tags = _config.Tags ?? new List<string>();
+            if (_hostingEnvironment.IsDevelopment())
+            {
+                tags.Add(Environment.MachineName);
+            }
+
             await _client.Agent.ServiceRegister(new AgentServiceRegistration()
             {
                 ID = id,
                 Name = _config.Name,
                 Address = _config.Address,
                 Port = _config.Port,
-                Tags = _config.Tags,
+                Tags = tags.ToArray(),
             }, cancellationToken);
         }
 

@@ -1,4 +1,6 @@
-﻿namespace Microservice.Consul
+﻿using System.Collections.Generic;
+
+namespace Microservice.Consul
 {
     public class ConsulConfig
     {
@@ -6,6 +8,6 @@
         public string Name { get; set; }
         public string Address { get; set; }
         public int Port { get; set; }
-        public string[] Tags { get; set; }
+        public List<string> Tags { get; set; }
     }
 }
