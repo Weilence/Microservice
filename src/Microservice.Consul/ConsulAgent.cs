@@ -37,7 +37,7 @@ namespace Microservice.Consul
             var tags = _config.Tags ?? new List<string>();
             if (_hostingEnvironment.IsDevelopment())
             {
-                tags.Add(Environment.MachineName);
+                tags.Add("Machine:" + Environment.MachineName);
             }
 
             await _client.Agent.ServiceRegister(new AgentServiceRegistration()

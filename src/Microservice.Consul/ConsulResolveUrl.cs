@@ -1,4 +1,6 @@
-﻿using Consul;
+﻿using System;
+using System.Linq;
+using Consul;
 using Microservice.Service;
 
 namespace Microservice.Consul
@@ -21,7 +23,10 @@ namespace Microservice.Consul
             else
             {
                 var queryResult = _consulClient.Catalog.Service(name).Result;
-                var service = queryResult.Response[0];
+
+                var service =
+                    queryResult.Response.FirstOrDefault(m =>
+                        m.ServiceTags.Contains("Machine:" + Environment.MachineName)) ?? queryResult.Response[0];
                 var address = "http://" + service.ServiceAddress + ":" + service.ServicePort + path;
                 return address;
             }
