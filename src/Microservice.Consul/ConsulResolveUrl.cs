@@ -22,14 +22,40 @@ namespace Microservice.Consul
             }
             else
             {
-                var queryResult = _consulClient.Catalog.Service(name).Result;
+                var services = _consulClient.Catalog.Service(name).Result.Response;
 
-                var service =
-                    queryResult.Response.FirstOrDefault(m =>
-                        m.ServiceTags.Contains("Machine:" + Environment.MachineName)) ?? queryResult.Response[0];
-                var address = "http://" + service.ServiceAddress + ":" + service.ServicePort + path;
-                return address;
+                var service = GetService(services);
+
+                if (service == null)
+                {
+                    throw new Exception("No service found");
+                }
+
+                return $"http://{service.ServiceAddress}:{service.ServicePort}{path}";
             }
+        }
+
+        private CatalogService GetService(CatalogService[] services)
+        {
+            return GetMachineService(services) ?? GetNonMachineService(services);
+        }
+
+        private CatalogService GetNonMachineService(CatalogService[] services)
+        {
+            return services.FirstOrDefault(m => !IsMachineTag(m.ServiceTags));
+        }
+
+        private static CatalogService GetMachineService(CatalogService[] services)
+        {
+            var service =
+                services.FirstOrDefault(m =>
+                    m.ServiceTags.Contains($"Machine:{Environment.MachineName}"));
+            return service;
+        }
+
+        private bool IsMachineTag(string[] tags)
+        {
+            return tags.Any(m => m.StartsWith("Machine:"));
         }
     }
 }
