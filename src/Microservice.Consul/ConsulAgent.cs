@@ -46,7 +46,7 @@ namespace Microservice.Consul
                 Name = _config.Name,
                 Address = _config.Address,
                 Port = _config.Port,
-                Tags = tags.ToArray(),
+                Tags = tags.ToArray()
             }, cancellationToken);
         }
 
