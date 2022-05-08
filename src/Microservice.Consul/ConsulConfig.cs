@@ -10,5 +10,7 @@ namespace Microservice.Consul
         public string Address { get; set; }
         public int Port { get; set; }
         public List<string> Tags { get; set; }
+
+        public string Token { get; set; }
     }
 }

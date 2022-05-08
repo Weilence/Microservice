@@ -1,5 +1,4 @@
 using Microservice.Api;
-using Microservice.Consul;
 using UserService = Microservice.User.Services.UserService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,5 +28,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseConsul();
 
 app.Run();

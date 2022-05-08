@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Consul;
@@ -46,7 +45,14 @@ namespace Microservice.Consul
                 Name = _config.Name,
                 Address = _config.Address,
                 Port = _config.Port,
-                Tags = tags.ToArray()
+                Tags = tags.ToArray(),
+                Check = new AgentServiceCheck()
+                {
+                    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),
+                    Interval = TimeSpan.FromSeconds(10),
+                    HTTP = $"http://{_config.Address}:{_config.Port}/consul/health",
+                    Timeout = TimeSpan.FromSeconds(5)
+                }
             }, cancellationToken);
         }
 
